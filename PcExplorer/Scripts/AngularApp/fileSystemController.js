@@ -34,6 +34,9 @@
         var info = cookieService.getInfo();
         jobId = info.jobId;
         fs.currentPath = info.path;
+        if (fs.currentPath == null) {
+            fs.currentPath = "";
+        }
         if (jobId == null) {
             fs.loadingCount = false;
         }
@@ -107,7 +110,7 @@
 
     function getDirectoryContents(path) {
         if (path == null) {
-            path = "";
+            return;
         }
         fs.loadingDirectory = true;
         fs.error = false;
