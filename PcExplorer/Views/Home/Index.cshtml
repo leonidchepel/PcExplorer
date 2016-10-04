@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>FileSystem Observer</title>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/angular-cookies.js"></script>
+    <script src="~/Scripts/angular-ui/ui-bootstrap-tpls.min.js"></script>
+    <script src="~/Scripts/AngularApp/fileSystemApp.js"></script>
+    <script src="~/Scripts/AngularApp/cookieService.js"></script>
+    <script src="~/Scripts/AngularApp/fileSystemService.js"></script>
+    <script src="~/Scripts/AngularApp/fileSystemController.js"></script>
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/Styles.css" />
+    <link rel="stylesheet" href="~/Content/Loader.css" />
+</head>
+<body ng-app="fileSystemApp">
+    <div class="container" ng-controller="fileSystemController as fs">
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Less 10Mb</th>
+                        <th>10Mb-50Mb</th>
+                        <th>More 100Mb</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <div ng-show='fs.currentPath==""'>
+                                Please select drive
+                            </div>
+                            <div ng-show='fs.currentPath!=""'>
+                                <div ng-show="fs.loadingCount">
+                                    <div class="loader">Loading...</div>
+                                </div>
+                                <div ng-show="!fs.loadingCount">{{fs.lessFiles}}</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-show='fs.currentPath==""'>
+                                Please select drive
+                            </div>
+                            <div ng-show='fs.currentPath!=""'>
+                                <div ng-show="fs.loadingCount">
+                                    <div class="loader">Loading...</div>
+                                </div>
+                                <div ng-show="!fs.loadingCount">
+                                    {{fs.middleFiles}}
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div ng-show='fs.currentPath==""'>
+                                Please select drive
+                            </div>
+                            <div ng-show='fs.currentPath!=""'>
+                                <div ng-show="fs.loadingCount">
+                                    <div class="loader">Loading...</div>
+                                </div>
+                                <div ng-show="!fs.loadingCount">
+                                    {{fs.bigFiles}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="title">
+                Current path:
+            </div>
+            <div class="path">
+                {{fs.currentPath}}
+            </div>
+        </div>
+        <div ng-show="fs.error" class="row error">You have no access to read this directory</div>
+        <div class="row  square-border">
+            <div ng-show="fs.loadingDirectory">
+                <div class="loader">Loading...</div>
+            </div>
+            <ol ng-show="!fs.loadingDirectory">
+                <li><a href="" ng-click="fs.getDirectoryContents(fs.prevDirectory)">..</a></li>
+                <li ng-repeat="file in fs.files"><a href="" ng-click="fs.getDirectoryContents(file.path)">{{file.name}}</a></li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>

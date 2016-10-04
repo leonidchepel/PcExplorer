@@ -1,0 +1,1 @@
+﻿angular.module('fileSystemApp', ['ngCookies', 'ui.bootstrap']);
